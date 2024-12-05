@@ -5,29 +5,13 @@ pool:
   vmImage: ubuntu-latest  # Sử dụng máy ảo Ubuntu mới nhất
 
 steps:
+- task: Npm@1
+  inputs:
+    command: 'publish'
+    workingDir: './'
 # Bước cài đặt Flutter SDK
 - script: |
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH="$PATH:`pwd`/flutter/bin"  # Thêm Flutter vào PATH
     flutter doctor
   displayName: 'Install Flutter SDK'
-
-# Bước cài đặt các phụ thuộc Dart/Flutter cho dự án
-- script: |
-    flutter pub get  # Cài đặt các gói phụ thuộc cho Flutter
-  displayName: 'Install dependencies'
-
-# Bước xây dựng ứng dụng Flutter
-- script: |
-    flutter build apk  # Ví dụ build cho ứng dụng Android
-  displayName: 'Build Flutter project'
-
-# Bước chạy kiểm tra (nếu có)
-- script: |
-    flutter test  # Chạy các bài kiểm tra của Flutter
-  displayName: 'Run Flutter tests'
-
-# Bước triển khai ứng dụng (nếu có)
-- script: |
-    echo "Deploying Flutter app..."
-  displayName: 'Deploy project'
