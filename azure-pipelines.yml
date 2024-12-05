@@ -20,9 +20,9 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: 'build/app/outputs/flutter-apk/app-release.apk'  # Đường dẫn đến file APK
-    artifact: 'FlutterApp'  # Tên artifact (bạn có thể đổi tên tùy ý)
-    publishLocation: 'pipeline'  # Lưu artifact trong pipeline
+    PathtoPublish: '$(Build.ArtifactStagingDirextory)'  
+    artifact: 'FlutterApp'  
+    publishLocation: 'pipeline'  
 
 - script: |
     echo "Deploying Flutter app..."
