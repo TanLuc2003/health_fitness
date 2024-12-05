@@ -1,16 +1,28 @@
-
 trigger:
-- main
+- main  
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-latest  
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    git clone https://github.com/flutter/flutter.git -b stable
+    export PATH="$PATH:`pwd`/flutter/bin" 
+    flutter doctor
+  displayName: 'Install Flutter SDK'
 
 - script: |
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
+    flutter pub get 
+  displayName: 'Install dependencies'
 
+- script: |
+    flutter build apk  
+  displayName: 'Build Flutter project'
+
+- script: |
+    flutter test  
+  displayName: 'Run Flutter tests'
+
+- script: |
+    echo "Deploying Flutter app..."
+  displayName: 'Deploy project'
