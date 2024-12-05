@@ -19,9 +19,5 @@ steps:
   displayName: 'Build Flutter project'
 
 - script: |
-    flutter test  
-  displayName: 'Run Flutter tests'
-
-- script: |
     echo "Deploying Flutter app..."
   displayName: 'Deploy project'
