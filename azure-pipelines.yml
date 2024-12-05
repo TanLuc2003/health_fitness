@@ -19,9 +19,15 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  
-    artifact: 'FlutterApp'  
+    targetPath: 'myfile.txt'
+    artifact: 'myArtifact'
     publishLocation: 'pipeline'
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'myArtifact'
+    downloadPath: '$(System.ArtifactsDirectory)'
 
 - script: |
     echo "Deploying Flutter app..."
