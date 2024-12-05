@@ -2,7 +2,7 @@ trigger:
 - main  
 
 pool:
-  vmImage: DESKTOP-1989J2H  
+  vmImage: Default  
 
 steps:
 - script: |
