@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "985798724788",
+    "firebase_url": "https://healthfitness-f95f0-default-rtdb.firebaseio.com",
+    "project_id": "healthfitness-f95f0",
+    "storage_bucket": "healthfitness-f95f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985798724788:android:6cd64302b1a2f9a1cc5be1",
+        "android_client_info": {
+          "package_name": "com.example.health_fitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985798724788-vagksh71t2lupq9cit158j7p96c5g4nd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.health_fitness",
+            "certificate_hash": "358035cbd8ed318160723258cf6b80c06c89d31e"
+          }
+        },
+        {
+          "client_id": "985798724788-i88h5fn1ec33j73uvag9agguefg8d41e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADh-m-7fc3TPBbx7XV_oHbWUURHpmr368"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985798724788-i88h5fn1ec33j73uvag9agguefg8d41e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
