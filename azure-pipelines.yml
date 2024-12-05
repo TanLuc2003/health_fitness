@@ -1,19 +1,33 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+- main  # Khi có thay đổi trên nhánh 'main', pipeline sẽ được kích hoạt
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-latest  # Sử dụng máy ảo Ubuntu mới nhất
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
+# Bước cài đặt Flutter SDK
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    git clone https://github.com/flutter/flutter.git -b stable
+    export PATH="$PATH:`pwd`/flutter/bin"  # Thêm Flutter vào PATH
+    flutter doctor
+  displayName: 'Install Flutter SDK'
+
+# Bước cài đặt các phụ thuộc Dart/Flutter cho dự án
+- script: |
+    flutter pub get  # Cài đặt các gói phụ thuộc cho Flutter
+  displayName: 'Install dependencies'
+
+# Bước xây dựng ứng dụng Flutter
+- script: |
+    flutter build apk  # Ví dụ build cho ứng dụng Android
+  displayName: 'Build Flutter project'
+
+# Bước chạy kiểm tra (nếu có)
+- script: |
+    flutter test  # Chạy các bài kiểm tra của Flutter
+  displayName: 'Run Flutter tests'
+
+# Bước triển khai ứng dụng (nếu có)
+- script: |
+    echo "Deploying Flutter app..."
+  displayName: 'Deploy project'
