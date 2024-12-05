@@ -2,7 +2,7 @@ trigger:
 - main  
 
 pool:
-  vmImage: ubuntu-latest  
+  vmImage: DESKTOP-1989J2H  
 
 steps:
 - script: |
