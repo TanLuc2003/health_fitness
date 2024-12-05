@@ -20,9 +20,9 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirextory)'  
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  
     artifact: 'FlutterApp'  
-    publishLocation: 'pipeline'  
+    publishLocation: 'pipeline'
 
 - script: |
     echo "Deploying Flutter app..."
