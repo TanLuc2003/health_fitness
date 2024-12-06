@@ -4,12 +4,10 @@ pool: myagent
 
 steps:
 - script: |
-    - script: |
     git clone https://github.com/flutter/flutter.git -b stable
-    set PATH=%PATH%;%CD%\flutter\bin
+    export PATH="$PATH:`pwd`/flutter/bin" 
     flutter doctor
   displayName: 'Install Flutter SDK'
-
 
 - script: |
     flutter pub get 
@@ -21,15 +19,9 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    PathtoPublish: 'build/app/outputs/flutter-apk/' # Correct path to APKs
-    artifact: 'FlutterApp'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  
+    artifact: 'FlutterApp'  
     publishLocation: 'pipeline'
-
-- task: DownloadPipelineArtifact@2
-  inputs:
-    artifact: 'FlutterApp'               # Name of the artifact published earlier
-    path: '$(System.ArtifactsDirectory)' # Path where the artifact will be downloaded
-
 
 - script: |
     echo "Deploying Flutter app..."
