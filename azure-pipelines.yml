@@ -4,10 +4,12 @@ pool: myagent
 
 steps:
 - script: |
+    - script: |
     git clone https://github.com/flutter/flutter.git -b stable
-    export PATH="$PATH:`pwd`/flutter/bin" 
+    set PATH=%PATH%;%CD%\flutter\bin
     flutter doctor
   displayName: 'Install Flutter SDK'
+
 
 - script: |
     flutter pub get 
