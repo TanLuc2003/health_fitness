@@ -19,6 +19,9 @@ class _WeatherPageState extends State<WeatherPage> {
   var hourlyForecast;
   var dailyForecast;
   List<String> cities = []; // Danh sách các địa điểm từ API
+  String getWeatherIconUrl(String iconCode) {
+    return 'http://openweathermap.org/img/wn/$iconCode@2x.png';
+  }
 
   final TextEditingController _searchController = TextEditingController();
 
@@ -34,22 +37,17 @@ class _WeatherPageState extends State<WeatherPage> {
     try {
       String citiesUrl =
           'https://api.openweathermap.org/data/2.5/group?id=1581130,1566083,1583992,1581297,1586203,1581047,1583477,1568770,1576633,1572151,1587919&appid=$apiKey&limit=1000000';
-
       final citiesResponse = await http.get(Uri.parse(citiesUrl));
-
       if (citiesResponse.statusCode == 200) {
         final List<dynamic> citiesData =
             json.decode(citiesResponse.body)['list'];
-
         if (citiesData != null && citiesData is List) {
           Set<String> uniqueCities = Set<String>();
-
           for (var city in citiesData) {
             if (city['name'] != null && city['name'] is String) {
               uniqueCities.add(city['name'].toString());
             }
           }
-
           setState(() {
             cities = uniqueCities.toList();
           });
@@ -72,7 +70,6 @@ class _WeatherPageState extends State<WeatherPage> {
           'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric';
       String forecastUrl =
           'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey&units=metric';
-
       final weatherResponse = await http.get(Uri.parse(url));
       final forecastResponse = await http.get(Uri.parse(forecastUrl));
 
@@ -88,8 +85,6 @@ class _WeatherPageState extends State<WeatherPage> {
       } else {
         print(
             'Không tải được dữ liệu thời tiết: ${weatherResponse.statusCode}, ${forecastResponse.statusCode}');
-        print('Phản hồi thời tiết: ${weatherResponse.body}');
-        print('Phản hồi dự báo: ${forecastResponse.body}');
         throw Exception('Không tải được dữ liệu thời tiết');
       }
     } catch (e) {
@@ -200,8 +195,6 @@ class _WeatherPageState extends State<WeatherPage> {
               dailyForecast == null
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -227,7 +220,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
-                    Container(
+                        Container(
                       height: 150,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
