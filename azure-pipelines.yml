@@ -1,0 +1,34 @@
+trigger:
+      - main
+pool: myagent  
+
+steps:
+- script: |
+    git clone https://github.com/TanLuc2003/App_Fitness -b stable
+    export PATH="$PATH:`pwd`/flutter/bin" 
+    flutter doctor
+  displayName: 'Install Flutter SDK'
+
+- script: |
+    flutter pub get 
+  displayName: 'Install dependencies'
+
+- script: |
+    flutter build apk --release  
+  displayName: 'Build Flutter project'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  
+    artifact: 'FlutterApp'  
+    publishLocation: 'pipeline'
+
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'current'
+    downloadType: 'specific'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- script: |
+    echo "Deploying Flutter app..."
+  displayName: 'Deploy project'
