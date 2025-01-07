@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:health_fitness/StepCounter.dart';
 import 'package:health_fitness/ui/app_scroll_behavior.dart';
 
-import './content/home.dart';
-import './content/account.dart';
-import 'content/news.dart';
+import 'Screen/home.dart';
+import 'Screen/account.dart';
+import 'Screen/news.dart';
 import './fluid_nav_bar.dart';
 
 class FluidNavBarDemo extends StatefulWidget {
@@ -26,7 +27,11 @@ class _FluidNavBarDemoState extends State {
         backgroundColor: Color.fromARGB(255, 212, 241, 247),
         extendBody: true,
         body: _child,
-        bottomNavigationBar: FluidNavBar(onChange: _handleNavigationChange),
+        bottomNavigationBar: _child is StepCounter
+            ? null
+            : FluidNavBar(
+                onChange:
+                    _handleNavigationChange), // Ẩn thanh điều hướng nếu đang ở trang StepCounter
       ),
     );
   }

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:health_fitness/BMIPage.dart';
+import 'package:health_fitness/DoctorAdviceScreen.dart';
 import 'package:health_fitness/ExercisePage.dart';
 import 'package:health_fitness/HeartRatePage.dart';
 import 'package:health_fitness/Login.dart';
 import 'package:health_fitness/NutritionPage.dart';
 import 'package:health_fitness/SettingsPage.dart';
 import 'package:health_fitness/StepCounter.dart';
-import 'package:health_fitness/TrackingPage.dart';
+import 'package:health_fitness/StatChart.dart';
 import 'package:health_fitness/WeatherPage.dart';
 
 class HomeContent extends StatelessWidget {
@@ -68,10 +69,8 @@ class HomeContent extends StatelessWidget {
               onSelected: (value) {
                 switch (value) {
                   case 1:
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TrackingPage()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => StatChart()));
                     break;
                   case 2:
                     Navigator.push(
@@ -123,16 +122,44 @@ class HomeContent extends StatelessWidget {
                           ),
                         ),
                         Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WeatherPage()));
-                          },
-                          child: Text(
-                            'Thời tiết',
-                            style: TextStyle(color: Colors.green),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors
+                                .white, // Màu nền của khung (bạn có thể thay đổi màu nền)
+                            borderRadius: BorderRadius.circular(
+                                30), // Tạo hình tròn cho khung
+                            border: Border.all(
+                              color: const Color.fromARGB(
+                                  255, 40, 117, 231), // Màu của viền khung
+                              width: 2, // Độ dày của viền
+                            ),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WeatherPage()));
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize
+                                  .min, // Đảm bảo chiều rộng của Row chỉ vừa đủ
+                              children: [
+                                Icon(
+                                  Icons.cloud, // Biểu tượng đám mây
+                                  color: const Color.fromARGB(
+                                      255, 40, 117, 231), // Màu của icon
+                                ),
+                                SizedBox(
+                                    width: 8), // Khoảng cách giữa icon và text
+                                Text(
+                                  'Thời tiết',
+                                  style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 40, 117, 231)),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -140,42 +167,69 @@ class HomeContent extends StatelessWidget {
                     SizedBox(height: 10),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.green[100],
+                        color: const Color.fromARGB(255, 250, 178,
+                            178), // Màu nền mặc định nếu hình ảnh chưa load
                         borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/nhiptim.png'), // Đường dẫn tới hình nền
+                          fit: BoxFit
+                              .cover, // Đảm bảo hình ảnh bao phủ toàn bộ Container
+                          opacity: 0.3, // Độ mờ của hình nền, có thể điều chỉnh
+                        ),
                       ),
                       padding: EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Stack(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          // Nội dung chính của bạn
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.favorite, color: Colors.red, size: 40),
-                              SizedBox(height: 10),
-                              Text(
-                                'Hãy đo nhịp tim của bạn nào',
-                                style: TextStyle(
-                                  color: Colors.black,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.favorite,
+                                      color:
+                                          const Color.fromARGB(255, 255, 17, 0),
+                                      size: 40),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Hãy đo nhịp tim của bạn nào',
+                                    style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 241, 45, 45),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HeartRatePage()),
+                                  );
+                                },
+                                child: Text('Đo ngay'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 248, 98, 98),
                                 ),
                               ),
                             ],
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HeartRatePage()),
-                              );
-                            },
-                            child: Text('Đo ngay'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                          // Thêm lớp phủ (overlay) nếu cần thiết
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(
+                                  0.2), // Lớp overlay để làm nổi bật nội dung
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -211,6 +265,8 @@ class HomeContent extends StatelessWidget {
                                 value: stepCount.toString(),
                                 color: Colors.blue[100]!,
                                 page: StepCounter(),
+                                image:
+                                    'assets/buocchan.jpg', // Thêm hình ảnh nền
                               );
                             } else {
                               return CircularProgressIndicator();
@@ -220,26 +276,47 @@ class HomeContent extends StatelessWidget {
                         buildHealthCard(
                           context,
                           icon: Icons.food_bank,
-                          title: 'Các chế độ ăn phù hợp',
+                          title: 'Chế độ ăn',
                           value: '',
                           color: Colors.red[100]!,
                           page: NutritionPage(),
+                          image: 'assets/food.jpg', // Thêm hình ảnh nền
                         ),
                         buildHealthCard(
                           context,
                           icon: Icons.scale,
-                          title: 'Cân nặng & chỉ số BMI',
-                          value: '--- KG',
+                          title: 'Chỉ số BMI',
+                          value: '',
                           color: Colors.green[100]!,
                           page: WeightHeightInputPage(),
+                          image: 'assets/BMI.jpg', // Thêm hình ảnh nền
                         ),
                         buildHealthCard(
                           context,
                           icon: Icons.fitness_center,
-                          title: 'Luyện tập thể chất',
-                          value: 'Hãy tập luyện nào',
+                          title: 'Luyện tập',
+                          value: '',
                           color: Colors.blue[100]!,
                           page: ExercisePage(),
+                          image: 'assets/fit.jpg', // Thêm hình ảnh nền
+                        ),
+                        buildHealthCard(
+                          context,
+                          icon: Icons.fitness_center,
+                          title: 'Hoạt động của bạn',
+                          value: '',
+                          color: Colors.blue[100]!,
+                          page: StatChart(),
+                          image: 'assets/bieudo.jpg', // Thêm hình ảnh nền
+                        ),
+                        buildHealthCard(
+                          context,
+                          icon: Icons.healing,
+                          title: 'Bác sĩ AI',
+                          value: '',
+                          color: Colors.blue[100]!, // Màu nền phía sau hình PNG
+                          page: DoctorAdviceScreen(),
+                          image: 'assets/BacsiAI.png',
                         ),
                       ],
                     ),
@@ -252,7 +329,7 @@ class HomeContent extends StatelessWidget {
       ),
       routes: {
         '/user_info': (context) => LoginPage(),
-        '/tracking': (context) => TrackingPage(),
+        '/tracking': (context) => StatChart(),
         '/nutri': (context) => NutritionPage(),
         '/exercise': (context) => ExercisePage(),
         '/setting': (context) => SettingsPage(),
@@ -269,32 +346,59 @@ class HomeContent extends StatelessWidget {
     required String value,
     required Color color,
     required Widget page,
+    String? image, // Tham số cho hình ảnh nền
   }) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => page));
       },
       child: Container(
-        padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: color,
+          color: color, // Màu nền của thẻ
           borderRadius: BorderRadius.circular(10),
+          image: image != null
+              ? DecorationImage(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover, // Đảm bảo hình ảnh phủ kín
+                )
+              : null,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, size: 40),
-            SizedBox(height: 10),
-            Text(
-              title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            Spacer(),
-            Text(
-              value,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.black
+                .withOpacity(0.1), // Lớp overlay giúp nội dung dễ đọc
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                icon,
+                size: 40,
+                color:
+                    const Color.fromARGB(255, 33, 207, 56), // Màu icon dễ đọc
+              ),
+              SizedBox(height: 10),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 94, 192, 38), // Màu chữ
+                ),
+              ),
+              Spacer(),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 255, 2, 2), // Màu chữ
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -305,7 +409,7 @@ class HomeContent extends StatelessWidget {
     if (user != null) {
       return _firestore.collection('users').doc(user.uid).snapshots();
     } else {
-      throw Exception('User is not logged in');
+      return Stream.empty();
     }
   }
 }

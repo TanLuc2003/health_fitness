@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class LoginController extends GetxController {
   var _googleSignin = GoogleSignIn();
@@ -37,11 +38,41 @@ class LoginController extends GetxController {
             'displayName': user.displayName,
             'email': user.email,
             'photoURL': user.photoURL,
-            'steps': 0, // Initialize steps only for new users
+            'steps': 0,
+            'distance': 0.0,
+            'calories': 0.0,
+            'timeWalked': '0:00',
+            'lastResetTimestamp': FieldValue.serverTimestamp(),
             'timestamp':
                 FieldValue.serverTimestamp(), // Set the initial timestamp
           });
         }
+
+        // Create or update daily steps document
+        String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('daily_steps')
+            .doc(currentDate)
+            .set({
+          'steps': 0,
+          'distance': 0.0,
+          'timeWalked': '0:00',
+          'calories': 0.0,
+          'timestamp': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true)); // Merge to avoid overwriting
+
+        // Add or update route for the current date
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('routes')
+            .doc(currentDate)
+            .set({
+          'route':
+              [], // Initialize with an empty route or update with new points
+        }, SetOptions(merge: true)); // Merge to avoid overwriting
       }
     } catch (e) {
       print('Login error: $e');

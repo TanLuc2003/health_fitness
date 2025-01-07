@@ -217,6 +217,8 @@ class NewsList extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
+                          maxLines: 3, // Giới hạn số dòng hiển thị
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

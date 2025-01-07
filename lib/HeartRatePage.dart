@@ -214,7 +214,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
   int? bpmValue = 0;
   Timer? _timer;
   List<int> bpmValues = [];
-  bool _countingDown = false; // Trạng thái đếm ngược
+  bool _countingDown = false;
 
   void _startMeasurement() {
     setState(() {
@@ -254,7 +254,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.blue, // Màu sắc chữ cho tiêu đề
+              color: Colors.blue,
             ),
           ),
           content: Text(
@@ -263,12 +263,11 @@ class _HeartRatePageState extends State<HeartRatePage> {
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: Colors.red, // Màu sắc chữ cho nội dung
+              color: Colors.red,
             ),
           ),
-          titlePadding: EdgeInsets.all(20), // Khoảng cách giữa tiêu đề và lề
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: 20), // Khoảng cách giữa nội dung và lề
+          titlePadding: EdgeInsets.all(20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
           actions: <Widget>[
             TextButton(
               child: Text('OK'),
@@ -289,7 +288,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Đo nhịp tim'),
-        backgroundColor: Colors.blue[900], // Màu sắc nền cho thanh tiêu đề
+        backgroundColor: Colors.blue[900],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -308,7 +307,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Màu sắc chữ cho tiêu đề
+                  color: Colors.black,
                 ),
               ),
               SizedBox(height: 20),
@@ -340,9 +339,8 @@ class _HeartRatePageState extends State<HeartRatePage> {
                     _countingDown ? _cancelMeasurement : _startMeasurement,
                 child: Text(_countingDown ? "Dừng lại" : "Bắt đầu đo"),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _countingDown
-                      ? Colors.red
-                      : Colors.blue[900], // Màu sắc nút
+                  backgroundColor:
+                      _countingDown ? Colors.red : Colors.blue[900],
                 ),
               ),
             ],
