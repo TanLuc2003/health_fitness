@@ -240,7 +240,7 @@ class _StatChartState extends State<StatChart> {
                     ],
                   )
                 : ClipRRect(
-                    borderRadius: BorderRadius.circular(15), // Bo góc biểu đồ
+                    borderRadius: BorderRadius.circular(10), // Bo góc biểu đồ
                     child: Container(
                       height: 400, // Giảm chiều cao biểu đồ
                       child: BarChart(mainBarData()),
